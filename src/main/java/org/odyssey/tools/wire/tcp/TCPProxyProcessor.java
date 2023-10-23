@@ -36,9 +36,8 @@ public class TCPProxyProcessor extends RequestProcessor {
                 BufferedReader in =
                         new BufferedReader(new InputStreamReader(((SocketMessage) message).getSocket().getInputStream()));
                 do {
-                    System.out.println("message: test");
                     String msg = in.readLine();
-                    System.out.println("message: " + msg);
+                    System.out.println("Message Received: " + msg);
                     this.queue.add(msg);
                 } while (in.ready());
             } catch (IOException e) {
@@ -47,33 +46,6 @@ public class TCPProxyProcessor extends RequestProcessor {
 
         } else {
             System.out.println("Unknown message");
-        }
-    }
-
-    public class SenderRunnable implements Runnable {
-        private final Queue<String> queueRef;
-        private final TCPClient client;
-        private int count = 0;
-
-        public SenderRunnable(Queue<String> queueRef, TCPClient client) {
-            this.queueRef = queueRef;
-            this.client = client;
-        }
-
-        @Override
-        public void run() {
-            while (true) {
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-                if (this.queueRef.size() > 0) {
-                    this.client.send(new StringMessage(this.queueRef.poll() + this.count++));
-                } else {
-                    System.out.println("Queue empty");
-                }
-            }
         }
     }
 }

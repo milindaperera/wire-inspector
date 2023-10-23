@@ -41,7 +41,6 @@ public class TCPClient implements Client {
         if (message instanceof StringMessage) {
             this.out.println(((StringMessage) message).getMessage());
         }
-
     }
 
     @Override

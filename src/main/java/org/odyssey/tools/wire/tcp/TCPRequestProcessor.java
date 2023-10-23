@@ -12,7 +12,7 @@ public class TCPRequestProcessor extends RequestProcessor {
     @Override
     public void processRequest(Message message) {
         if (message instanceof SocketMessage) {
-            System.out.println("Message received");
+            System.out.println("Client Connected");
             try {
                 BufferedReader in =
                         new BufferedReader(new InputStreamReader(((SocketMessage) message).getSocket().getInputStream()));
@@ -20,7 +20,7 @@ public class TCPRequestProcessor extends RequestProcessor {
                 do {
                     String greeting = in.readLine();
                     System.out.println(greeting);
-                } while (in.ready());
+                } while (true);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
